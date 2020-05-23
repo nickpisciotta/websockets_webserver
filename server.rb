@@ -65,6 +65,12 @@ Sec-WebSocket-Accept: #{ response_key }
 
   STDERR.puts "Converted to a string #{ unmasked_data.pack('C*').force_encoding('utf-8').inspect }"
 
+  response = "Loud and clear!"
+  STDERR.puts "Sending response: #{ response.inspect }"
+  output = [0b10000001, response.size, response]
+
+  socket.write output.pack("CCA#{ response.size }")
+  
   socket.close
 end
 
